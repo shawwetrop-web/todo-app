@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
-import { service } from '../utils/request'
+import  service  from '../utils/request'
 
 const userStore = useUserStore()
 const router = useRouter()
