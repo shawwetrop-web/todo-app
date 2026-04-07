@@ -10,6 +10,15 @@ const userStore = useUserStore()
 const router = useRouter()
 const loginForm = ref({ username: '', password: '' })
 
+// 🔥 关键修复：进入登录页强制清空脏数据，永不空白
+onMounted(() => {
+  try {
+    userStore.clearToken()
+    localStorage.clear()
+    sessionStorage.clear()
+  } catch (e) {}
+})
+
 const login = async () => {
   try {
     const res = await axios.post(`${baseURL}/login`, loginForm.value)
