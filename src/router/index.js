@@ -7,6 +7,7 @@ import TodoView from '../views/TodoView.vue'
 import { useUserStore } from '../stores/user'
 
 const routes = [
+  { path: '/', redirect: '/login' },   
   { path: '/login', component: LoginView },
   { path: '/register', component: RegisterView },
   { path: '/todo', component: TodoView },
