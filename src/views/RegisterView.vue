@@ -2,7 +2,7 @@
 
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { service } from '../utils/request'
+import  service  from '../utils/request'
 
 
 const router = useRouter()
