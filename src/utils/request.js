@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '../stores/user'
 
 const service = axios.create({
-  baseURL: '/api', 
+  baseURL: 'https://todo-backend-production-e0b1.up.railway.app/api', 
   timeout: 5000 
 })
 
@@ -19,12 +19,16 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
   response => {
     // 成功拿到数据
-    return response.data
+    return response
   },
-  error => {
-    // 统一处理错误
-    return Promise.reject(error)
+ error => {
+  if (error.response?.status === 401) {
+    const userStore = useUserStore()
+    userStore.clearToken()
+    window.location.href = '/login'
   }
+  return Promise.reject(error)
+}
 )
 
 export default service

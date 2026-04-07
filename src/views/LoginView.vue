@@ -1,8 +1,6 @@
 <script setup>
-import { config } from '../config'
-const baseURL = config.baseURL
 import { ref } from 'vue'
-import axios from 'axios'
+import  service  from '../utils/request'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
 
@@ -10,26 +8,10 @@ const userStore = useUserStore()
 const router = useRouter()
 const loginForm = ref({ username: '', password: '' })
 
-console.log("=== 当前 localStorage 全部内容 ===")
-for(let i=0; i<localStorage.length; i++){
-  let key = localStorage.key(i)
-  console.log(key, "→", localStorage.getItem(key))
-}
-
-// 🔥 关键修复：进入登录页强制清空脏数据，永不空白
-onMounted(() => {
-  try {
-    userStore.clearToken()
-    localStorage.clear()
-    sessionStorage.clear()
-    // 强制重置 store（彻底解决白屏）
-    userStore.$reset()
-  } catch (e) {}
-})
 
 const login = async () => {
   try {
-    const res = await axios.post(`${baseURL}/login`, loginForm.value)
+    const res = await service.post(`/login`, loginForm.value)
     userStore.setToken(res.data.access_token)
     alert('登录成功')
     router.push('/todo')

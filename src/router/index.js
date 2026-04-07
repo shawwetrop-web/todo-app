@@ -31,9 +31,4 @@ router.beforeEach((to, from) => {
     return '/login'
   }
 })
-router.onError(() => {
-  localStorage.removeItem('token')
-  window.location.reload()
-})
-
 export default router

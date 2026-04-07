@@ -2,15 +2,16 @@
 import { config } from '../config'
 const baseURL = config.baseURL
 import { ref } from 'vue'
-import axios from 'axios'
 import { useRouter } from 'vue-router'
+import { service } from '../utils/request'
+
 
 const router = useRouter()
 const form = ref({ username: '', password: '' })
 
 const register = async () => {
   try {
-    await axios.post(`${baseURL}/register`, form.value)
+    await service.post(`/register`, form.value)
     alert('注册成功！请登录')
     router.push('/login')
   } catch (err) {

@@ -2,9 +2,9 @@
 import { config } from '../config'
 const baseURL = config.baseURL
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
+import { service } from '../utils/request'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -14,29 +14,26 @@ const newContent = ref('')
 
 
 const getTodoList = async () => {
-  try {
-    const res = await axios.get(`${baseURL}/todo/list`)
-    todoList.value = res.data
-  } catch (err) {
-    alert('请先登录')
-    router.push('/login')
-  }
+  
+  const res = await service.get(`/todo/list`)
+  todoList.value = res.data
+  
 }
 
 const addTodo = async () => {
   if (!newContent.value) return
-  await axios.post(`${baseURL}/api/todo/add`, { content: newContent.value })
+  await service.post(`/todo/add`, { content: newContent.value })
   getTodoList()
   newContent.value = ''
 }
 
 const deleteTodo = async (id) => {
-  await axios.delete(`${baseURL}/api/todo/delete/${id}`)
+  await service.delete(`/todo/delete/${id}`)
   getTodoList()
 }
 
 const updateStatus = async (id) => {
-  await axios.put(`${baseURL}/api/todo/update/${id}`)
+  await service.put(`/todo/update/${id}`)
   getTodoList()
 }
 
