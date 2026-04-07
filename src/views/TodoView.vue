@@ -1,6 +1,4 @@
 <script setup>
-import { config } from '../config'
-const baseURL = config.baseURL
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'

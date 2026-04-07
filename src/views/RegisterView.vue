@@ -1,6 +1,5 @@
 <script setup>
-import { config } from '../config'
-const baseURL = config.baseURL
+
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { service } from '../utils/request'
