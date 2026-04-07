@@ -4,16 +4,14 @@ const baseURL = config.baseURL
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '../stores/user'
 
+const userStore = useUserStore()
 const router = useRouter()
 const todoList = ref([])
 const newContent = ref('')
 
-axios.interceptors.request.use(config => {
-  const token = localStorage.getItem('token')
-  if (token) config.headers.Authorization = `Bearer ${token}`
-  return config
-})
+
 
 const getTodoList = async () => {
   try {
@@ -43,7 +41,7 @@ const updateStatus = async (id) => {
 }
 
 const logout = () => {
-  localStorage.removeItem('token')
+  userStore.clearToken()
   router.push('/login')
 }
 

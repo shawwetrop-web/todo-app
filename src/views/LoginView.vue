@@ -4,14 +4,16 @@ const baseURL = config.baseURL
 import { ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '../stores/user'
 
+const userStore = useUserStore()
 const router = useRouter()
 const loginForm = ref({ username: '', password: '' })
 
 const login = async () => {
   try {
     const res = await axios.post(`${baseURL}/login`, loginForm.value)
-    localStorage.setItem('token', res.data.access_token)
+    userStore.setToken(res.data.access_token)
     alert('登录成功')
     router.push('/todo')
   } catch (err) {
